@@ -168,7 +168,7 @@
          "routeColor":"#D8AF64",
          "displayPriority":500,
          "iconEmoji": "📍",
-         "overlayName": "GPS Location"
+         "overlayName": "GPS Duration"
       },
       "stops":[
          {
