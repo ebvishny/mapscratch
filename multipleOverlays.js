@@ -1,0 +1,170 @@
+window.overlayData = {
+    scheduled: {
+      visible: false,
+      styles: {
+        normalPin: '#8AB56C',
+        routeColor: '#8AB56C',
+        displayPriority: 250,
+      },
+      stops: [
+        {
+          coordinate: [37.7951315, -122.402986],
+          duration: '2.5h',
+          start: '8:00 AM',
+          end: '10:30 AM',
+          title: "Transamerica Pyramid",
+          category: 'Visit',
+          url: "http://www.transamericapyramidcenter.com/"
+        },
+        {
+          coordinate: [37.8023553, -122.405742],
+          title: "Coit Tower",
+          category: 'Visit',
+          start: '12:30 PM',
+          end: '1:30 PM',
+          duration: '1h',
+          url: "http://sfrecpark.org/destination/telegraph-hill-pioneer-park/coit-tower/"
+        },
+        {
+          coordinate: [37.7552305, -122.452624],
+          title: "Sutro Tower",
+          start: '2:00 PM',
+          end: '4:00 PM',
+          category: 'Visit',
+          duration: '2h',
+          url: "http://www.sutrotower.com",
+          warnings: [
+            { name: 'WARNING_VISIT_NOT_HIT', specific_message: 'Visit scheduled but not on timesheet!' }
+          ]
+        },
+        {
+          coordinate: [37.8184493, -122.478409],
+          start: '5:00 PM',
+          end: '6:00 PM',
+          duration: '1h',
+          category: 'Visit',
+          title: "Golden Gate Bridge",
+          url: "http://www.goldengatebridge.org"
+        }
+      ]
+    },
+    timesheet: {
+      visible: false,
+      styles: {
+        normalPin: '#5878AE',
+        routeColor: '#5878AE',
+        displayPriority: 750,
+      },
+      stops: [
+        {
+          coordinate: [37.7954201, -122.39352],
+          title: "Ferry Building",
+          start: '8:12 AM',
+          end: '8:45 AM',
+          duration: '33m',
+          category: 'Shop Time',
+          url: "http://www.ferrybuildingmarketplace.com"
+        },
+        {
+          coordinate: [37.7951315, -122.402986],
+          duration: '2.5h',
+          start: '8:52 AM',
+          end: '11:30 AM',
+          title: "Transamerica Pyramid",
+          category: 'Visit',
+          url: "http://www.transamericapyramidcenter.com/",
+          warnings: [
+            {
+              name: 'GPS_DISCREPANCY',
+              message: '⚠️ Actual Time Onsite 9:30 AM - 10:45 AM'
+            }
+          ]
+        },
+        {
+          coordinate: [37.8083396, -122.415727],
+          title: "Fisherman's Wharf",
+          category: 'Lunch',
+          duration: "43m",
+          start: '11:50 AM',
+          end: '12:33 PM',
+          url: "http://visitfishermanswharf.com"
+        },
+        {
+          coordinate: [37.8023553, -122.405742],
+          title: "Coit Tower",
+          category: 'Visit',
+          start: '12:45 PM',
+          end: '1:37 PM',
+          duration: '52 min',
+          url: "http://sfrecpark.org/destination/telegraph-hill-pioneer-park/coit-tower/"
+        },
+        {
+          coordinate: [37.779267, -122.419269],
+          title: "City Hall",
+          start: '4:15 PM',
+          end: '4:35 PM',
+          duration: '20min',
+          category: 'Shop Time',
+          url: "http://sfgsa.org/index.aspx?page=1085"
+        },
+        {
+          coordinate: [37.8184493, -122.478409],
+          start: '5:15 PM',
+          end: '6:00 PM',
+          duration: '45m',
+          category: 'Visit',
+          title: "Golden Gate Bridge",
+          url: "http://www.goldengatebridge.org",
+          warnings: [
+            { name: 'ESTIMATE_OFF', specific_message: 'Visit took 25% less time than estimated!' }
+          ]
+        }
+      ]
+    },
+    actual: {
+      visible: false,
+      styles: {
+        normalPin: '#D8AF64',
+        routeColor: '#D8AF64',
+        displayPriority: 500,
+      },
+      stops: [
+        {
+          coordinate: [37.7954201, -122.39352],
+          start: '8:15 AM',
+          end: '8:50 AM',
+          duration: '35m'
+        },
+        {
+          coordinate: [37.7951315, -122.402986],
+          duration: '1h 15m',
+          start: '9:30 AM',
+          end: '10:45 AM'
+        },
+        {
+          coordinate: [37.8083396, -122.415727],
+          duration: "35m",
+          start: '10:55 AM',
+          end: '12:30 PM'
+        },
+        {
+          coordinate: [37.8023553, -122.405742],
+          start: '12:45 PM',
+          end: '1:30 PM',
+          duration: '45 min'
+        },
+        {
+          coordinate: [37.779267, -122.419269],
+          start: '4:10 PM',
+          end: '4:30 PM',
+          duration: '20min'
+        },
+        {
+          coordinate: [37.8184493, -122.478409],
+          start: '5:10 PM',
+          end: '6:00 PM',
+          duration: '50m'
+        }
+      ]
+    }
+  };
