@@ -21,7 +21,7 @@
 
   // [CALLOUTS]
   // Stop annotation callout delegate
-  var CALLOUT_OFFSET = new DOMPoint(-148, -78);
+  var CALLOUT_OFFSET = new DOMPoint(-78, -78);
   var stopAnnotationCallout = {
     calloutElementForAnnotation: function(annotation) {
       return calloutForStopAnnotation(annotation);
@@ -48,10 +48,13 @@
 
     var duration = section.appendChild(document.createElement("p"));
     duration.className = "duration";
-    duration.textContent = `${annotation.stop.overlayName}: ${annotation.stop.duration}`;
+    var strong = duration.appendChild(document.createElement("strong"));
+    strong.textContent = `${annotation.stop.overlayName}: ${annotation.stop.duration}`;
 
 
     if (annotation.stop.warnings && annotation.stop.warnings.length) {
+      var strong2 = section.append(document.createElement('strong'));
+      strong2.textContent = 'Warnings:'
       var ul = section.appendChild(document.createElement('ul'));
       for (var i = 0; i < annotation.stop.warnings.length; i++) {
         var li = ul.appendChild(document.createElement('li'));
@@ -77,13 +80,13 @@
     var createdAnnotations = overlayConfig.stops.map(function(stop) {
       counter += 1
       stop.overlayName = overlayConfig.styles.overlayName;
-      var counterFormatted = `${overlayConfig.styles.iconEmoji}${counter}`
+      var counterFormatted = `${counter}`
       var stopCoordinate = new mapkit.Coordinate(stop.coordinate[0], stop.coordinate[1]);
       var annotation = new mapkit.MarkerAnnotation(stopCoordinate, {
         callout: stopAnnotationCallout,
         color: overlayConfig.styles.normalPin,
         title: `${stop.title || ''}`,
-        glyphText: `${stop.warnings ? `⚠️` : counterFormatted}`,
+        glyphText: `${stop.warnings ? `⚠️` : counter}`,
         subtitle: 'Landmark Subtext',
       });
       annotation.stop = stop
