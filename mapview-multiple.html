@@ -21,7 +21,7 @@
 
   // [CALLOUTS]
   // Stop annotation callout delegate
-  var CALLOUT_OFFSET = new DOMPoint(-78, -78);
+  var CALLOUT_OFFSET = new DOMPoint(-28, -28);
   var stopAnnotationCallout = {
     calloutElementForAnnotation: function(annotation) {
       return calloutForStopAnnotation(annotation);
@@ -49,7 +49,7 @@
     var duration = section.appendChild(document.createElement("p"));
     duration.className = "duration";
     var strong = duration.appendChild(document.createElement("strong"));
-    strong.textContent = `${annotation.stop.overlayName}:`
+    strong.textContent = `${annotation.stop.overlayName}: `
     var span = duration.appendChild(document.createElement('span'))
     span.textContent = annotation.stop.duration;
 
@@ -57,11 +57,10 @@
     if (annotation.stop.warnings && annotation.stop.warnings.length) {
       var strong2 = section.appendChild(document.createElement('strong'));
       strong2.textContent = 'Warnings:'
-      var ul = section.appendChild(document.createElement('ul'));
       for (var i = 0; i < annotation.stop.warnings.length; i++) {
-        var li = ul.appendChild(document.createElement('li'));
-        li.className = 'warningItem';
-        li.textContent = annotation.stop.warnings[i].specific_message;
+        var p = section.appendChild(document.createElement('li'));
+        p.className = 'warningItem';
+        p.textContent = annotation.stop.warnings[i].specific_message;
       }
     }
 
