@@ -69,7 +69,8 @@
       "styles":{
          "normalPin":"#5878AE",
          "routeColor":"#5878AE",
-         "displayPriority":750
+         "displayPriority":750,
+         "iconEmoji": "💲"
       },
       "stops":[
          {
