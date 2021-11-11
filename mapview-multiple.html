@@ -60,10 +60,10 @@
 
     if (annotation.stop.warnings) {
       var ul = section.appendChild(document.createElement('ul'));
-      for (var i = 0; i < annotation.warnings.length; i++) {
+      for (var i = 0; i < annotation.stop.warnings.length; i++) {
         var li = ul.append(document.createElement('li'));
         li.className = 'warningItem';
-        li.textContent = annotation.warnings[i].specific_message;
+        li.textContent = annotation.stop.warnings[i].specific_message;
       }
     }
 
