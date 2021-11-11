@@ -324,15 +324,14 @@
     var myDirections = new mapkit.Directions();
     myDirections.route({
               origin: to_coordinate,
-              destination: from_coordinate,
-              transportType: mapkit.Directions.Transport.Automobile },
+              destination: from_coordinate },
             function(error, data) {
               // Results return asynchronously via this callback function, in `data`
               if (data && data.routes && data.routes.length) {
                 map.showItem(data.routes[0].polyline);
               }
             }
-    );
+     });
   }
 
   // Landmark annotation custom callout
