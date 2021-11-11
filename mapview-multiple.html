@@ -61,7 +61,7 @@
     if (annotation.stop.warnings) {
       var ul = section.appendChild(document.createElement('ul'));
       for (var i = 0; i < annotation.stop.warnings.length; i++) {
-        var li = ul.append(document.createElement('li'));
+        var li = ul.appendChild(document.createElement('li'));
         li.className = 'warningItem';
         li.textContent = annotation.stop.warnings[i].specific_message;
       }
@@ -81,8 +81,8 @@
       var annotation = new mapkit.MarkerAnnotation(stopCoordinate, {
         callout: stopAnnotationCallout,
         color: overlayConfig.styles.normalPin,
-        title: `${stop.title || ''} (${stop.duration})`,
-        glyphText: `${stop.warnings ? `⚠️${counterFormatted}` : counterFormatted}`,
+        title: `${counterFormatted} - ${stop.title || ''}`,
+        glyphText: `${stop.warnings ? `⚠️` : counterFormatted}`,
         subtitle: 'Landmark Subtext',
       });
       annotation.stop = stop
