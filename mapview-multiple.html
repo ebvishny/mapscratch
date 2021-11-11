@@ -53,11 +53,17 @@
     var span = duration.appendChild(document.createElement('span'))
     span.textContent = annotation.stop.duration;
 
+    // Now add the times
+    var times = section.appendChild(document.createElement('p'))
+    times.className = 'startEnd'
+    times.textContent = `${annotation.stop.start} - ${annotation.stop.end}`;
+
 
     if (annotation.stop.warnings && annotation.stop.warnings.length) {
       var strong2 = section.appendChild(document.createElement('strong'));
       strong2.textContent = 'Warnings:'
       for (var i = 0; i < annotation.stop.warnings.length; i++) {
+        section.appendChild(document.createElement('br'));
         var small = section.appendChild(document.createElement('small'));
         small.className = 'warningItem';
         small.textContent = annotation.stop.warnings[i].specific_message;
