@@ -324,7 +324,7 @@
     var myDirections = new mapkit.Directions();
     myDirections.route({
               origin: to_coordinate,
-              destination: from_coordinate
+              destination: from_coordinate,
               transportType: mapkit.Directions.Transport.Automobile },
             function(error, data) {
               // Results return asynchronously via this callback function, in `data`
