@@ -328,10 +328,9 @@
             function(error, data) {
               // Results return asynchronously via this callback function, in `data`
               if (data && data.routes && data.routes.length) {
-                map.showItems([data.routes[0].polyline]);
+                map.showItems(new Array(data.routes[0].polyline));
               }
-            }
-     });
+            }});
   }
 
   // Landmark annotation custom callout
