@@ -48,7 +48,7 @@
 
     var duration = section.appendChild(document.createElement("p"));
     duration.className = "duration";
-    duration.textContent = `${stop.overlayName}: ${annotation.stop.duration}`;
+    duration.textContent = `${annotation.stop.overlayName}: ${annotation.stop.duration}`;
 
     if (annotation.stop.url) {
       var link = section.appendChild(document.createElement("p"));
@@ -58,7 +58,7 @@
       a.textContent = "Show Visit";
     }
 
-    if (annotation.warnings) {
+    if (annotation.stop.warnings) {
       var ul = section.appendChild(document.createElement('ul'));
       for (var i = 0; i < annotation.warnings.length; i++) {
         var li = ul.append(document.createElement('li'));
@@ -82,7 +82,7 @@
         callout: stopAnnotationCallout,
         color: overlayConfig.styles.normalPin,
         title: `${stop.title || ''} (${stop.duration})`,
-        glyphText: `${stop.warnings ? '⚠️' : counterFormatted}`,
+        glyphText: `${stop.warnings ? `⚠️${counterFormatted}` : counterFormatted}`,
         subtitle: 'Landmark Subtext',
       });
       annotation.stop = stop
