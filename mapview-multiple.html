@@ -319,18 +319,25 @@
     overlayConfig.existingItems = createdAnnotations //.concat([polyline]);
     map.showItems(createdAnnotations);
   }
-
+  
+  var myDirections = new mapkit.Directions();
+  
+  function directionsHandler(error, data) {
+    if (data && data.routes && data.routes.length) {
+      console.error(data);
+      map.showItems(new Array(data.routes[0].polyline));
+    }
+  }
+  
   function addPolyLineForDirections(to_coordinate, from_coordinate, map) {
-    var myDirections = new mapkit.Directions();
-    myDirections.route({
-              origin: to_coordinate,
-              destination: from_coordinate },
-            function(error, data) {
-              // Results return asynchronously via this callback function, in `data`
-              if (data && data.routes && data.routes.length) {
-                map.showItems(new Array(data.routes[0].polyline));
-              }
-            }});
+
+       var directionsOptions = { 
+            origin: from_coordinate,
+            destination: to_coordinate,
+            transportType: mapkit.Directions.Transport.Automobile 
+        };
+    
+        directions.route(directionsOptions, directionsHandler);
   }
 
   // Landmark annotation custom callout
