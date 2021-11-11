@@ -42,7 +42,7 @@
     div.className = "landmark";
 
     var title = div.appendChild(document.createElement("h1"));
-    title.textContent = annotation.stop.title || 'GPS Stop';
+    title.textContent = `${annotation.stop.counter}. ${annotation.stop.title || 'GPS Stop'}`;
 
     var section = div.appendChild(document.createElement("section"));
 
@@ -82,6 +82,7 @@
     var createdAnnotations = overlayConfig.stops.map(function(stop) {
       counter += 1
       stop.overlayName = overlayConfig.styles.overlayName;
+      stop.counter = counter;
       var counterFormatted = `${counter}`
       var stopCoordinate = new mapkit.Coordinate(stop.coordinate[0], stop.coordinate[1]);
       var annotation = new mapkit.MarkerAnnotation(stopCoordinate, {
