@@ -217,6 +217,16 @@
             "duration":"20min"
          },
          {
+            "coordinate": [
+               37.799575,
+               -122.438696
+             ],
+            "start": "4:45 PM",
+            "end": "5:03 PM",
+            "duration": "18min",
+            "comment": "Unauthorized stop at Barry's bootcamp"
+         },
+         {
             "coordinate":[
                37.8184493,
                -122.478409
