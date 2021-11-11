@@ -216,52 +216,52 @@
           ]
         }
       ]
-     },
-      actual: {
-        visible: false,
-        styles: {
-          normalPin: '#D8AF64',
-          routeColor: '#D8AF64',
+    },
+    actual: {
+      visible: false,
+      styles: {
+        normalPin: '#D8AF64',
+        routeColor: '#D8AF64',
+      },
+      stops: [
+        {
+          coordinate: new mapkit.Coordinate(37.7954201, -122.39352),
+          start: '8:15 AM',
+          end: '8:50 AM',
+          duration: '35m'
         },
-        stops: [
-          {
-            coordinate: new mapkit.Coordinate(37.7954201, -122.39352),
-            start: '8:15 AM',
-            end: '8:50 AM',
-            duration: '35m'
-          },
-          {
-            coordinate: new mapkit.Coordinate(37.7951315, -122.402986),
-            duration: '1h 15m',
-            start: '9:30 AM',
-            end: '10:45 AM'
-          },
-          {
-            coordinate: new mapkit.Coordinate(37.8083396, -122.415727),
-            duration: "35m",
-            start: '10:55 AM',
-            end: '12:30 PM'
-          },
-          {
-            coordinate: new mapkit.Coordinate(37.8023553, -122.405742),
-            start: '12:45 PM',
-            end: '1:30 PM',
-            duration: '45 min'
-          },
-          {
-            coordinate: new mapkit.Coordinate(37.779267, -122.419269),
-            start: '4:10 PM',
-            end: '4:30 PM',
-            duration: '20min'
-          },
-          {
-            coordinate: new mapkit.Coordinate(37.8184493, -122.478409),
-            start: '5:10 PM',
-            end: '6:00 PM',
-            duration: '50m'
-          }
-        ]
-      }
+        {
+          coordinate: new mapkit.Coordinate(37.7951315, -122.402986),
+          duration: '1h 15m',
+          start: '9:30 AM',
+          end: '10:45 AM'
+        },
+        {
+          coordinate: new mapkit.Coordinate(37.8083396, -122.415727),
+          duration: "35m",
+          start: '10:55 AM',
+          end: '12:30 PM'
+        },
+        {
+          coordinate: new mapkit.Coordinate(37.8023553, -122.405742),
+          start: '12:45 PM',
+          end: '1:30 PM',
+          duration: '45 min'
+        },
+        {
+          coordinate: new mapkit.Coordinate(37.779267, -122.419269),
+          start: '4:10 PM',
+          end: '4:30 PM',
+          duration: '20min'
+        },
+        {
+          coordinate: new mapkit.Coordinate(37.8184493, -122.478409),
+          start: '5:10 PM',
+          end: '6:00 PM',
+          duration: '50m'
+        }
+      ]
+    }
   };
 
 
@@ -291,6 +291,8 @@
       map.removeItems(overlayConfig.existingItems);
     }
     var routeStyle  = new mapkit.Style({
+      lineWidth: 3,
+      lineDash: [8, 4],
       strokeColor: overlayConfig.styles.routeColor,
     });
     var counter = 0;
@@ -322,28 +324,27 @@
     overlayConfig.existingItems = createdAnnotations //.concat([polyline]);
     map.showItems(createdAnnotations);
   }
-  
+
   var myDirections = new mapkit.Directions();
 
-  
-  function addPolyLineForDirections(to_coordinate, from_coordinate, map, theStyle) {
-      
-        function directionsHandler(error, data) {
-          if (data && data.routes && data.routes.length) {
-            console.error(data);
-            var thePolyline = data.routes[0].polyline;
-            thePolyline.style = theStyle
-            map.showItems(new Array(thePolyline));
-          }
-        }
 
-       var directionsOptions = { 
-            origin: from_coordinate,
-            destination: to_coordinate,
-            transportType: mapkit.Directions.Transport.Automobile 
-        };
-    
-        myDirections.route(directionsOptions, directionsHandler);
+  function addPolyLineForDirections(to_coordinate, from_coordinate, map, theStyle) {
+
+    function directionsHandler(error, data) {
+      if (data && data.routes && data.routes.length) {
+        console.error(data);
+        var thePolyline = data.routes[0].polyline;
+        thePolyline.style = theStyle
+      }
+    }
+
+    var directionsOptions = {
+      origin: from_coordinate,
+      destination: to_coordinate,
+      transportType: mapkit.Directions.Transport.Automobile
+    };
+
+    myDirections.route(directionsOptions, directionsHandler);
   }
 
   // Landmark annotation custom callout
