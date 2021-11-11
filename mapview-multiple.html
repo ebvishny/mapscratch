@@ -101,7 +101,8 @@
       visible: false,
       styles: {
         normalPin: '#8AB56C',
-        routeColor: '#8AB56C'
+        routeColor: '#8AB56C',
+        displayPriority: 250,
       },
       stops: [
         {
@@ -149,7 +150,8 @@
       visible: false,
       styles: {
         normalPin: '#5878AE',
-        routeColor: '#5878AE'
+        routeColor: '#5878AE',
+        displayPriority: 750,
       },
       stops: [
         {
@@ -222,6 +224,7 @@
       styles: {
         normalPin: '#D8AF64',
         routeColor: '#D8AF64',
+        displayPriority: 500,
       },
       stops: [
         {
@@ -284,7 +287,12 @@
 
   var map = new mapkit.Map("map");
 
-  function addOverlaySection(overlayConfig, map) {
+  var pointList = {
+    actual: [],
+    scheduled: [],
+  }
+
+  function addOverlaySection(overlayConfig, map, pointListKey = null) {
     // Remove anything already there
     console.error(overlayConfig);
     if (overlayConfig.existingItems && overlayConfig.existingItems.length) {
@@ -309,7 +317,7 @@
       });
       annotation.landmark = stop
       if (previousCoordinate) {
-        addPolyLineForDirections(stop.coordinate, previousCoordinate, map, routeStyle);
+        addPolyLineForDirections(stop.coordinate, previousCoordinate, map, routeStyle, pointListKey);
       }
       previousCoordinate = stop.coordinate;
       return annotation;
@@ -328,12 +336,19 @@
   var myDirections = new mapkit.Directions();
 
 
-  function addPolyLineForDirections(to_coordinate, from_coordinate, map, theStyle) {
+  function addPolyLineForDirections(to_coordinate, from_coordinate, map, theStyle, pointListKey = null) {
 
     function directionsHandler(error, data) {
       if (data && data.routes && data.routes.length) {
         console.error(data);
         var thePolyline = data.routes[0].polyline;
+        var thePath = data.routes[0].path.flat();
+        if (pointListKey) {
+          for (var i = 0; i < thePath.length; i++) {
+            var coord = thePath[i];
+            pointList[pointListKey].push([coord.latitude, coord.longitude]);
+          }
+        }
         thePolyline.style = theStyle
       }
     }
@@ -382,8 +397,8 @@
   }
 
   // Last created has most visible z-index
-  addOverlaySection(overlayData.actual, map);
-  addOverlaySection(overlayData.scheduled, map);
+  addOverlaySection(overlayData.actual, map, 'actual');
+  addOverlaySection(overlayData.scheduled, map, 'scheduled');
   addOverlaySection(overlayData.timesheet, map);
 </script>
 </body>
