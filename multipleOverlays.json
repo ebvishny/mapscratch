@@ -47,7 +47,7 @@
             "warnings":[
                {
                   "name":"WARNING_VISIT_NOT_HIT",
-                  "specific_message":"Visit scheduled but not on timesheet!"
+                  "specific_message":"⚠️ Visit scheduled but not on timesheet!"
                }
             ]
          },
@@ -101,7 +101,7 @@
             "warnings":[
                {
                   "name":"GPS_DISCREPANCY",
-                  "message":"⚠️ Actual Time Onsite 9:30 AM - 10:45 AM"
+                  "specific_message":"📍 Actual Time Onsite 9:30 AM - 10:45 AM"
                }
             ]
          },
@@ -155,7 +155,7 @@
             "warnings":[
                {
                   "name":"ESTIMATE_OFF",
-                  "specific_message":"Visit took 25% less time than estimated!"
+                  "specific_message":"⏳ Visit took 50% less time than estimated! (90 minutes)"
                }
             ]
          }
