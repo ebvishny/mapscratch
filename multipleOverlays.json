@@ -1,6 +1,6 @@
 {
    "scheduled":{
-      "visible":false,
+      "visible": true,
       "styles":{
          "normalPin":"#8AB56C",
          "routeColor":"#8AB56C",
@@ -66,7 +66,7 @@
       ]
    },
    "timesheet":{
-      "visible":false,
+      "visible": true,
       "styles":{
          "normalPin":"#5878AE",
          "routeColor":"#5878AE",
@@ -162,7 +162,7 @@
       ]
    },
    "actual":{
-      "visible":false,
+      "visible": true,
       "styles":{
          "normalPin":"#D8AF64",
          "routeColor":"#D8AF64",
