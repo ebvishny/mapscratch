@@ -6,7 +6,7 @@
 
   <script src="https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.js"></script>
   <script src="https://as.mapkitter.net/lib/latest.js"></script>
-  <link rel="stylesheet" href="mapStyles.css?1">
+  <link rel="stylesheet" href="mapStyles.css">
 </head>
 
 <body>
@@ -112,6 +112,9 @@
   function handleData(overlayData, routeCoordinates, map) {
     // First remove anything already on the map
     clearExistingMapItems(map)
+
+    // Log
+    console.log('adding data', overlayData);
     // Last created has most visible z-index
     addOverlaySection(overlayData.actual, map);
     addOverlaySection(overlayData.scheduled, map);
