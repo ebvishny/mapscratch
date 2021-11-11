@@ -50,21 +50,22 @@
     duration.className = "duration";
     duration.textContent = `${annotation.stop.overlayName}: ${annotation.stop.duration}`;
 
-    if (annotation.stop.url) {
-      var link = section.appendChild(document.createElement("p"));
-      link.className = "visit_link";
-      var a = link.appendChild(document.createElement("a"));
-      a.href = annotation.stop.url;
-      a.textContent = "Show Visit";
-    }
 
-    if (annotation.stop.warnings) {
+    if (annotation.stop.warnings && annotation.stop.warnings.length) {
       var ul = section.appendChild(document.createElement('ul'));
       for (var i = 0; i < annotation.stop.warnings.length; i++) {
         var li = ul.appendChild(document.createElement('li'));
         li.className = 'warningItem';
         li.textContent = annotation.stop.warnings[i].specific_message;
       }
+    }
+
+    if (annotation.stop.url) {
+      var link = section.appendChild(document.createElement("p"));
+      link.className = "visit_link";
+      var a = link.appendChild(document.createElement("a"));
+      a.href = annotation.stop.url;
+      a.textContent = "Show Visit";
     }
 
     return div;
@@ -81,7 +82,7 @@
       var annotation = new mapkit.MarkerAnnotation(stopCoordinate, {
         callout: stopAnnotationCallout,
         color: overlayConfig.styles.normalPin,
-        title: `${counterFormatted} - ${stop.title || ''}`,
+        title: `${stop.title || ''}`,
         glyphText: `${stop.warnings ? `⚠️` : counterFormatted}`,
         subtitle: 'Landmark Subtext',
       });
