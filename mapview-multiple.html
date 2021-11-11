@@ -6,273 +6,25 @@
 
   <script src="https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.js"></script>
   <script src="https://as.mapkitter.net/lib/latest.js"></script>
-  <style>
-    #map {
-      height: 600px;
-    }
-
-    a:link, a:visited {
-      color: #2aaef5;
-      outline: none;
-      text-decoration: none;
-    }
-
-    .landmark {
-      width: 250px;
-      padding: 7px 0 0 0;
-      background: rgba(247, 247, 247, 0.75);
-      border-radius: 5px;
-      box-shadow: 10px 10px 50px rgba(0, 0, 0, 0.29);
-      font-family: Helvetica, Arial, sans-serif;
-      -webkit-transform-origin: 0 10px;
-      transform-origin: 0 10px;
-    }
-
-    .landmark h1 {
-      margin-top: 0;
-      padding: 5px 15px;
-      background: #2aaef5;
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 16px;
-      font-weight: 300;
-    }
-
-    .landmark section {
-      padding: 0 15px 5px;
-      font-size: 14px;
-    }
-
-    .landmark section p {
-      margin: 5px 0;
-    }
-
-    .landmark:after {
-      content: "";
-      position: absolute;
-      top: 7px;
-      left: -13px;
-      width: 0;
-      height: 0;
-      margin-bottom: -13px;
-      border-right: 13px solid #2aaef5;
-      border-top: 13px solid rgba(0, 0, 0, 0);
-      border-bottom: 13px solid rgba(0, 0, 0, 0);
-    }
-
-    @-webkit-keyframes scale-and-fadein {
-      0% {
-        -webkit-transform: scale(0.2);
-        opacity: 0;
-      }
-
-      100% {
-        -webkit-transform: scale(1);
-        opacity: 1;
-      }
-    }
-
-    @keyframes scale-and-fadein {
-      0% {
-        transform: scale(0.2);
-        opacity: 0;
-      }
-
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-  </style>
-
+  <link rel="stylesheet" href="mapStyles.css?1">
 </head>
 
 <body>
 <div id="map"></div>
 
 <script>
+  // [MAP INITIALIZATION]
   mapkit.init({
     authorizationCallback: function (done) { mapkitter.token("7ca4315e-14c2-4f8a-b888-9ee79c4b8523", done); }
   });
+  var map = new mapkit.Map("map");
 
-
-  // Landmarks data
-  var overlayData = {
-    scheduled: {
-      visible: false,
-      styles: {
-        normalPin: '#8AB56C',
-        routeColor: '#8AB56C',
-        displayPriority: 250,
-      },
-      stops: [
-        {
-          coordinate: new mapkit.Coordinate(37.7951315, -122.402986),
-          duration: '2.5h',
-          start: '8:00 AM',
-          end: '10:30 AM',
-          title: "Transamerica Pyramid",
-          category: 'Visit',
-          url: "http://www.transamericapyramidcenter.com/"
-        },
-        {
-          coordinate: new mapkit.Coordinate(37.8023553, -122.405742),
-          title: "Coit Tower",
-          category: 'Visit',
-          start: '12:30 PM',
-          end: '1:30 PM',
-          duration: '1h',
-          url: "http://sfrecpark.org/destination/telegraph-hill-pioneer-park/coit-tower/"
-        },
-        {
-          coordinate: new mapkit.Coordinate(37.7552305, -122.452624),
-          title: "Sutro Tower",
-          start: '2:00 PM',
-          end: '4:00 PM',
-          category: 'Visit',
-          duration: '2h',
-          url: "http://www.sutrotower.com",
-          warnings: [
-            { name: 'WARNING_VISIT_NOT_HIT', specific_message: 'Visit scheduled but not on timesheet!' }
-          ]
-        },
-        {
-          coordinate: new mapkit.Coordinate(37.8184493, -122.478409),
-          start: '5:00 PM',
-          end: '6:00 PM',
-          duration: '1h',
-          category: 'Visit',
-          title: "Golden Gate Bridge",
-          url: "http://www.goldengatebridge.org"
-        }
-      ]
-    },
-    timesheet: {
-      visible: false,
-      styles: {
-        normalPin: '#5878AE',
-        routeColor: '#5878AE',
-        displayPriority: 750,
-      },
-      stops: [
-        {
-          coordinate: new mapkit.Coordinate(37.7954201, -122.39352),
-          title: "Ferry Building",
-          start: '8:12 AM',
-          end: '8:45 AM',
-          duration: '33m',
-          category: 'Shop Time',
-          url: "http://www.ferrybuildingmarketplace.com"
-        },
-        {
-          coordinate: new mapkit.Coordinate(37.7951315, -122.402986),
-          duration: '2.5h',
-          start: '8:52 AM',
-          end: '11:30 AM',
-          title: "Transamerica Pyramid",
-          category: 'Visit',
-          url: "http://www.transamericapyramidcenter.com/",
-          warnings: [
-            {
-              name: 'GPS_DISCREPANCY',
-              message: '⚠️ Actual Time Onsite 9:30 AM - 10:45 AM'
-            }
-          ]
-        },
-        {
-          coordinate: new mapkit.Coordinate(37.8083396, -122.415727),
-          title: "Fisherman's Wharf",
-          category: 'Lunch',
-          duration: "43m",
-          start: '11:50 AM',
-          end: '12:33 PM',
-          url: "http://visitfishermanswharf.com"
-        },
-        {
-          coordinate: new mapkit.Coordinate(37.8023553, -122.405742),
-          title: "Coit Tower",
-          category: 'Visit',
-          start: '12:45 PM',
-          end: '1:37 PM',
-          duration: '52 min',
-          url: "http://sfrecpark.org/destination/telegraph-hill-pioneer-park/coit-tower/"
-        },
-        {
-          coordinate: new mapkit.Coordinate(37.779267, -122.419269),
-          title: "City Hall",
-          start: '4:15 PM',
-          end: '4:35 PM',
-          duration: '20min',
-          category: 'Shop Time',
-          url: "http://sfgsa.org/index.aspx?page=1085"
-        },
-        {
-          coordinate: new mapkit.Coordinate(37.8184493, -122.478409),
-          start: '5:15 PM',
-          end: '6:00 PM',
-          duration: '45m',
-          category: 'Visit',
-          title: "Golden Gate Bridge",
-          url: "http://www.goldengatebridge.org",
-          warnings: [
-            { name: 'ESTIMATE_OFF', specific_message: 'Visit took 25% less time than estimated!' }
-          ]
-        }
-      ]
-    },
-    actual: {
-      visible: false,
-      styles: {
-        normalPin: '#D8AF64',
-        routeColor: '#D8AF64',
-        displayPriority: 500,
-      },
-      stops: [
-        {
-          coordinate: new mapkit.Coordinate(37.7954201, -122.39352),
-          start: '8:15 AM',
-          end: '8:50 AM',
-          duration: '35m'
-        },
-        {
-          coordinate: new mapkit.Coordinate(37.7951315, -122.402986),
-          duration: '1h 15m',
-          start: '9:30 AM',
-          end: '10:45 AM'
-        },
-        {
-          coordinate: new mapkit.Coordinate(37.8083396, -122.415727),
-          duration: "35m",
-          start: '10:55 AM',
-          end: '12:30 PM'
-        },
-        {
-          coordinate: new mapkit.Coordinate(37.8023553, -122.405742),
-          start: '12:45 PM',
-          end: '1:30 PM',
-          duration: '45 min'
-        },
-        {
-          coordinate: new mapkit.Coordinate(37.779267, -122.419269),
-          start: '4:10 PM',
-          end: '4:30 PM',
-          duration: '20min'
-        },
-        {
-          coordinate: new mapkit.Coordinate(37.8184493, -122.478409),
-          start: '5:10 PM',
-          end: '6:00 PM',
-          duration: '50m'
-        }
-      ]
-    }
-  };
-
-
-  // Landmark annotation callout delegate
+  // [CALLOUTS]
+  // Stop annotation callout delegate
   var CALLOUT_OFFSET = new DOMPoint(-148, -78);
-  var landmarkAnnotationCallout = {
+  var stopAnnotationCallout = {
     calloutElementForAnnotation: function(annotation) {
-      return calloutForLandmarkAnnotation(annotation);
+      return calloutForStopAnnotation(annotation);
     },
 
     calloutAnchorOffsetForAnnotation: function(annotation, element) {
@@ -284,122 +36,106 @@
     }
   };
 
-
-  var map = new mapkit.Map("map");
-
-  var pointList = {
-    actual: [],
-    scheduled: [],
-  }
-
-  function addOverlaySection(overlayConfig, map, pointListKey = null) {
-    // Remove anything already there
-    console.error(overlayConfig);
-    if (overlayConfig.existingItems && overlayConfig.existingItems.length) {
-      map.removeItems(overlayConfig.existingItems);
-    }
-    var routeStyle  = new mapkit.Style({
-      lineWidth: 3,
-      lineDash: [8, 4],
-      strokeColor: overlayConfig.styles.routeColor,
-    });
-    var counter = 0;
-    var previousCoordinate = null;
-    var createdAnnotations = overlayConfig.stops.map(function(stop) {
-      counter += 1
-      var counterFormatted = `#${counter}`
-      var annotation = new mapkit.MarkerAnnotation(stop.coordinate, {
-        callout: landmarkAnnotationCallout,
-        color: overlayConfig.styles.normalPin,
-        title: `${stop.title || ''} (${stop.duration})`,
-        glyphText: `${stop.warnings ? '⚠️' : counterFormatted}`,
-        subtitle: 'Landmark Subtext',
-      });
-      annotation.landmark = stop
-      if (previousCoordinate) {
-        addPolyLineForDirections(stop.coordinate, previousCoordinate, map, routeStyle, pointListKey);
-      }
-      previousCoordinate = stop.coordinate;
-      return annotation;
-    });
-    // Now map out all the stops
-
-    /* var coords = overlayConfig.stops.map(function(stop) {
-      return stop.coordinate
-    });
-    var polyline = DrawPolyLine(coords,  overlayConfig.styles.routeColor);
-    map.addOverlay(polyline);*/
-    overlayConfig.existingItems = createdAnnotations //.concat([polyline]);
-    map.showItems(createdAnnotations);
-  }
-
-  var myDirections = new mapkit.Directions();
-
-
-  function addPolyLineForDirections(to_coordinate, from_coordinate, map, theStyle, pointListKey = null) {
-
-    function directionsHandler(error, data) {
-      if (data && data.routes && data.routes.length) {
-        console.error(data);
-        var thePolyline = data.routes[0].polyline;
-        var thePath = data.routes[0].path.flat();
-        if (pointListKey) {
-          for (var i = 0; i < thePath.length; i++) {
-            var coord = thePath[i];
-            pointList[pointListKey].push([coord.latitude, coord.longitude]);
-          }
-        }
-        thePolyline.style = theStyle
-      }
-    }
-
-    var directionsOptions = {
-      origin: from_coordinate,
-      destination: to_coordinate,
-      transportType: mapkit.Directions.Transport.Automobile
-    };
-
-    myDirections.route(directionsOptions, directionsHandler);
-  }
-
-  // Landmark annotation custom callout
-  function calloutForLandmarkAnnotation(annotation) {
+  // stop annotation custom callout
+  function calloutForStopAnnotation(annotation) {
     var div = document.createElement("div");
     div.className = "landmark";
 
     var title = div.appendChild(document.createElement("h1"));
-    title.textContent = annotation.landmark.title || 'GPS Stop';
+    title.textContent = annotation.stop.title || 'GPS Stop';
 
     var section = div.appendChild(document.createElement("section"));
 
     var duration = section.appendChild(document.createElement("p"));
     duration.className = "duration";
-    duration.textContent = annotation.landmark.duration;
+    duration.textContent = `${stop.overlayName}: ${annotation.stop.duration}`;
 
-    if (annotation.landmark.url) {
+    if (annotation.stop.url) {
       var link = section.appendChild(document.createElement("p"));
       link.className = "visit_link";
       var a = link.appendChild(document.createElement("a"));
-      a.href = annotation.landmark.url;
+      a.href = annotation.stop.url;
       a.textContent = "Show Visit";
+    }
+
+    if (annotation.warnings) {
+      var ul = section.appendChild(document.createElement('ul'));
+      for (var i = 0; i < annotation.warnings.length; i++) {
+        var li = ul.append(document.createElement('li'));
+        li.className = 'warningItem';
+        li.textContent = annotation.warnings[i].specific_message;
+      }
     }
 
     return div;
   }
-  function DrawPolyLine(coords, strokeColor='#F0F'){
-    var style = new mapkit.Style({
-      lineWidth: 2,
-      lineJoin: "miter",
-      lineDash: [8, 4],
-      strokeColor: strokeColor,
+
+  // [ANNOTATIONS]
+  function addOverlaySection(overlayConfig, map) {
+    var counter = 0;
+    var createdAnnotations = overlayConfig.stops.map(function(stop) {
+      counter += 1
+      stop.overlayName = overlayConfig.styles.overlayName;
+      var counterFormatted = `${overlayConfig.styles.iconEmoji}${counter}`
+      var stopCoordinate = new mapkit.Coordinate(stop.coordinate[0], stop.coordinate[1]);
+      var annotation = new mapkit.MarkerAnnotation(stopCoordinate, {
+        callout: stopAnnotationCallout,
+        color: overlayConfig.styles.normalPin,
+        title: `${stop.title || ''} (${stop.duration})`,
+        glyphText: `${stop.warnings ? '⚠️' : counterFormatted}`,
+        subtitle: 'Landmark Subtext',
+      });
+      annotation.stop = stop
+      return annotation;
     });
-    return new mapkit.PolylineOverlay(coords, { style: style });
   }
 
-  // Last created has most visible z-index
-  addOverlaySection(overlayData.actual, map, 'actual');
-  addOverlaySection(overlayData.scheduled, map, 'scheduled');
-  addOverlaySection(overlayData.timesheet, map);
+  function DrawPolyLine(coords, overlayConfigStyles){
+    var routeStyle  = new mapkit.Style({
+      lineWidth: 3,
+      lineDash: [8, 4],
+      strokeColor: overlayConfigStyles.routeColor,
+    });
+    return new mapkit.PolylineOverlay(coords, { style: routeStyle });
+  }
+
+  fetch('multipleOverlays.json')
+          .then(response => response.json())
+          .then(overlayData => mergeOverlayDataAndRoute(overlayData, map));
+
+  function mergeOverlayDataAndRoute(overlayData, map) {
+    fetch('routeCoordinates.json')
+            .then(response => response.json())
+            .then(routeCoordinates => handleData(overlayData, routeCoordinates, map));
+  }
+
+  function handleData(overlayData, routeCoordinates, map) {
+    // First remove anything already on the map
+    clearExistingMapItems(map)
+    // Last created has most visible z-index
+    addOverlaySection(overlayData.actual, map);
+    addOverlaySection(overlayData.scheduled, map);
+    addOverlaySection(overlayData.timesheet, map);
+
+    // Now add in the route sprites
+    var actualCoordinates = routeCoordinates.actual.map(function(coordPair) {
+      return new mapkit.Coordinate(coordPair[0], coordPair[1]);
+    });
+    var actualPolyline = DrawPolyLine(actualCoordinates, overlayData.actual.styles);
+    map.addOverlay(actualPolyline);
+    var scheduledCoordinates = routeCoordinates.scheduled.map(function(coordPair) {
+      return new mapkit.Coordinate(coordPair[0], coordPair[1]);
+    });
+    var scheduledPolyline = DrawPolyLine(scheduledCoordinates, overlayData.scheduled.styles);
+    map.addOverlay(scheduledPolyline);
+
+    // Finally focus the map
+    map.showItems(map.annotations);
+  }
+
+  function clearExistingMapItems(map) {
+    map.removeItems(map.annotations.concat(map.overlays));
+  }
 </script>
 </body>
 </html>
