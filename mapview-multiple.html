@@ -316,7 +316,7 @@
     });
     var polyline = DrawPolyLine(coords,  overlayConfig.styles.routeColor);
     map.addOverlay(polyline);*/
-    overlayConfig.existingItems = createdAnnotations.concat([polyline]);
+    overlayConfig.existingItems = createdAnnotations //.concat([polyline]);
     map.showItems(createdAnnotations);
   }
 
