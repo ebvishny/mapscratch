@@ -5,7 +5,8 @@
          "normalPin":"#8AB56C",
          "routeColor":"#8AB56C",
          "displayPriority":250,
-         "iconEmoji": "📅"
+         "iconEmoji": "📅",
+         "overlayName": "Scheduled"
       },
       "stops":[
          {
@@ -70,7 +71,8 @@
          "normalPin":"#5878AE",
          "routeColor":"#5878AE",
          "displayPriority":750,
-         "iconEmoji": "💲"
+         "iconEmoji": "💲",
+         "overlayName": "Timesheet"
       },
       "stops":[
          {
@@ -165,7 +167,8 @@
          "normalPin":"#D8AF64",
          "routeColor":"#D8AF64",
          "displayPriority":500,
-         "iconEmoji": "📍"
+         "iconEmoji": "📍",
+         "overlayName": "GPS Location"
       },
       "stops":[
          {
