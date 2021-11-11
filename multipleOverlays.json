@@ -4,7 +4,8 @@
       "styles":{
          "normalPin":"#8AB56C",
          "routeColor":"#8AB56C",
-         "displayPriority":250
+         "displayPriority":250,
+         "iconEmoji": "📅"
       },
       "stops":[
          {
