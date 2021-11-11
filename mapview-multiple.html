@@ -291,6 +291,7 @@
       map.removeItems(overlayConfig.existingItems);
     }
     var counter = 0;
+    var previousCoordinate = null;
     var createdAnnotations = overlayConfig.stops.map(function(stop) {
       counter += 1
       var counterFormatted = `#${counter}`
@@ -302,16 +303,38 @@
         subtitle: 'Landmark Subtext',
       });
       annotation.landmark = stop
+      if (previousCoordinate) {
+        addPolyLineForDirections(stop.coordinate, previousCoordinate, map);
+      }
+      previousCoordinate = stop.coordinate;
       return annotation;
     });
-    var coords = overlayConfig.stops.map(function(stop) {
+    // Now map out all the stops
+
+    /* var coords = overlayConfig.stops.map(function(stop) {
       return stop.coordinate
     });
     var polyline = DrawPolyLine(coords,  overlayConfig.styles.routeColor);
-    map.addOverlay(polyline);
+    map.addOverlay(polyline);*/
     overlayConfig.existingItems = createdAnnotations.concat([polyline]);
     map.showItems(createdAnnotations);
   }
+
+  function addPolyLineForDirections(to_coordinate, from_coordinate, map) {
+    var myDirections = new mapkit.Directions();
+    myDirections.route({
+              origin: to_coordinate,
+              destination: from_coordinate
+              transportType: mapkit.Directions.Transport.Automobile },
+            function(error, data) {
+              // Results return asynchronously via this callback function, in `data`
+              if (data && data.routes && data.routes.length) {
+                map.showItem(data.routes[0].polyline);
+              }
+            }
+    );
+  }
+
   // Landmark annotation custom callout
   function calloutForLandmarkAnnotation(annotation) {
     var div = document.createElement("div");
