@@ -21,7 +21,7 @@
 
   // [CALLOUTS]
   // Stop annotation callout delegate
-  var CALLOUT_OFFSET = new DOMPoint(-28, -28);
+  var CALLOUT_OFFSET = new DOMPoint(-148, -78);
   var stopAnnotationCallout = {
     calloutElementForAnnotation: function(annotation) {
       return calloutForStopAnnotation(annotation);
@@ -58,7 +58,7 @@
       var strong2 = section.appendChild(document.createElement('strong'));
       strong2.textContent = 'Warnings:'
       for (var i = 0; i < annotation.stop.warnings.length; i++) {
-        var p = section.appendChild(document.createElement('li'));
+        var p = section.appendChild(document.createElement('p'));
         p.className = 'warningItem';
         p.textContent = annotation.stop.warnings[i].specific_message;
       }
