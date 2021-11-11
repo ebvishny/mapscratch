@@ -164,7 +164,8 @@
       "styles":{
          "normalPin":"#D8AF64",
          "routeColor":"#D8AF64",
-         "displayPriority":500
+         "displayPriority":500,
+         "iconEmoji": "📍"
       },
       "stops":[
          {
