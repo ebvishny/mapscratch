@@ -49,11 +49,13 @@
     var duration = section.appendChild(document.createElement("p"));
     duration.className = "duration";
     var strong = duration.appendChild(document.createElement("strong"));
-    strong.textContent = `${annotation.stop.overlayName}: ${annotation.stop.duration}`;
+    strong.textContent = `${annotation.stop.overlayName}:`
+    var span = duration.appendChild(document.createElement('span'))
+    span.textContent = annotation.stop.duration;
 
 
     if (annotation.stop.warnings && annotation.stop.warnings.length) {
-      var strong2 = section.append(document.createElement('strong'));
+      var strong2 = section.appendChild(document.createElement('strong'));
       strong2.textContent = 'Warnings:'
       var ul = section.appendChild(document.createElement('ul'));
       for (var i = 0; i < annotation.stop.warnings.length; i++) {
