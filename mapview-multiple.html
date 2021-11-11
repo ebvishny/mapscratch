@@ -58,9 +58,9 @@
       var strong2 = section.appendChild(document.createElement('strong'));
       strong2.textContent = 'Warnings:'
       for (var i = 0; i < annotation.stop.warnings.length; i++) {
-        var p = section.appendChild(document.createElement('p'));
-        p.className = 'warningItem';
-        p.textContent = annotation.stop.warnings[i].specific_message;
+        var small = section.appendChild(document.createElement('small'));
+        small.className = 'warningItem';
+        small.textContent = annotation.stop.warnings[i].specific_message;
       }
     }
 
