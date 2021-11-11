@@ -328,7 +328,7 @@
             function(error, data) {
               // Results return asynchronously via this callback function, in `data`
               if (data && data.routes && data.routes.length) {
-                map.showItem(data.routes[0].polyline);
+                map.showItems([data.routes[0].polyline]);
               }
             }
      });
