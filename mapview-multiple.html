@@ -112,12 +112,12 @@
     return new mapkit.PolylineOverlay(coords, { style: routeStyle });
   }
 
-  fetch('multipleOverlays.json')
+  fetch('multipleOverlays.json?2')
           .then(response => response.json())
           .then(overlayData => mergeOverlayDataAndRoute(overlayData, map));
 
   function mergeOverlayDataAndRoute(overlayData, map) {
-    fetch('routeCoordinates.json')
+    fetch('routeCoordinates.json?2')
             .then(response => response.json())
             .then(routeCoordinates => handleData(overlayData, routeCoordinates, map));
   }
