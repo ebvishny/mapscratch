@@ -290,6 +290,9 @@
     if (overlayConfig.existingItems && overlayConfig.existingItems.length) {
       map.removeItems(overlayConfig.existingItems);
     }
+    var routeStyle  = new mapkit.Style({
+      strokeColor: overlayConfig.styles.routeColor,
+    });
     var counter = 0;
     var previousCoordinate = null;
     var createdAnnotations = overlayConfig.stops.map(function(stop) {
@@ -304,7 +307,7 @@
       });
       annotation.landmark = stop
       if (previousCoordinate) {
-        addPolyLineForDirections(stop.coordinate, previousCoordinate, map);
+        addPolyLineForDirections(stop.coordinate, previousCoordinate, map, routeStyle);
       }
       previousCoordinate = stop.coordinate;
       return annotation;
@@ -321,15 +324,18 @@
   }
   
   var myDirections = new mapkit.Directions();
+
   
-  function directionsHandler(error, data) {
-    if (data && data.routes && data.routes.length) {
-      console.error(data);
-      map.showItems(new Array(data.routes[0].polyline));
-    }
-  }
-  
-  function addPolyLineForDirections(to_coordinate, from_coordinate, map) {
+  function addPolyLineForDirections(to_coordinate, from_coordinate, map, theStyle) {
+      
+        function directionsHandler(error, data) {
+          if (data && data.routes && data.routes.length) {
+            console.error(data);
+            var thePolyline = data.routes[0].polyline;
+            thePolyline.style = theStyle
+            map.showItems(new Array(thePolyline));
+          }
+        }
 
        var directionsOptions = { 
             origin: from_coordinate,
