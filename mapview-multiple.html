@@ -11,7 +11,7 @@
 
 <body>
 <div id="map"></div>
-<div id="legendContainer" style="padding:25px;background-color:#F7F7F7;border:2px dashed #333;">
+<div id="legendContainer" style="font-family: Helvetica, Arial, sans-serif;padding:25px;background-color:#F7F7F7;border:2px dashed #333;margin-top:25px; width:300px;">
   <h2>Click to toggle:</h2>
   <div id="legend">
   </div>
@@ -32,7 +32,7 @@
     Object.keys(overlayData).forEach(function(keyName) {
       var overlayContent = overlayData[keyName];
       var bgColor = overlayContent.visible ? overlayContent.styles.normalPin : '#F7F7F7';
-      var borderColor = overlayContent.visible ? '#F7F7F7' : overlayContent.styles.normalPin;
+      var borderColor = overlayContent.styles.normalPin;
       var color = overlayContent.visible ? '#fff' : overlayContent.styles.normalPin;
       var overlayName = overlayContent.styles.overlayName;
       htmlContent += `<button id='toggle_scheduled' style='padding:5px;background-color:${bgColor};border:2px solid ${borderColor};color:${color}' onclick="toggleOverlay('${overlayName}', '${keyName}')">${keyName.replace('actual', 'GPS')}</button>`
