@@ -12,7 +12,7 @@
 <body>
 <div id="map"></div>
 <div id="legendContainer" style="padding:25px">
-  <div id="legend" stye="backgroundColor:#F7F7F7;border:2px dashed #CCC;padding:15px;">
+  <div id="legend" stye="background-color:#F7F7F7;border:2px dashed #CCC;padding:15px;">
   </div>
 </div>
 
@@ -32,7 +32,8 @@
       var overlayContent = overlayData[keyName];
       var bgColor = overlayContent.visible ? overlayContent.styles.normalPin : '#F7F7F7';
       var borderColor = overlayContent.visible ? '#F7F7F7' : overlayContent.styles.normalPin;
-      htmlContent += `<button id='toggle_scheduled' style='padding:5px;background-color:${bgColor};border:2px solid ${borderColor}' onclick='toggleOverlay(\'${keyName}\')'>${keyName}</button>`
+      var color = overlayContent.visible ? '#ccc' : '#fff';
+      htmlContent += `<button id='toggle_scheduled' style='padding:5px;background-color:${bgColor};border:2px solid ${borderColor}' onclick="toggleOverlay('${keyName}')">${keyName}</button>`
     });
     document.getElementById('legend').innerHTML = htmlContent;
   }
