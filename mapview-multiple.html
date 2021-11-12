@@ -11,8 +11,9 @@
 
 <body>
 <div id="map"></div>
-<div id="legendContainer" style="padding:25px">
-  <div id="legend" stye="background-color:#F7F7F7;border:2px dashed #CCC;padding:15px;">
+<div id="legendContainer" style="padding:25px;background-color:#F7F7F7;border:2px dashed #333;">
+  <h2>Click to toggle:</h2>
+  <div id="legend">
   </div>
 </div>
 
@@ -32,7 +33,7 @@
       var overlayContent = overlayData[keyName];
       var bgColor = overlayContent.visible ? overlayContent.styles.normalPin : '#F7F7F7';
       var borderColor = overlayContent.visible ? '#F7F7F7' : overlayContent.styles.normalPin;
-      var color = overlayContent.visible ? '#ccc' : '#fff';
+      var color = overlayContent.visible ? '#fff' : overlayContent.styles.normalPin;
       var overlayName = overlayContent.styles.overlayName;
       htmlContent += `<button id='toggle_scheduled' style='padding:5px;background-color:${bgColor};border:2px solid ${borderColor};color:${color}' onclick="toggleOverlay('${overlayName}', '${keyName}')">${keyName.replace('actual', 'GPS')}</button>`
     });
@@ -148,7 +149,7 @@
       strokeColor: overlayConfigStyles.routeColor,
     });
     var poly = new mapkit.PolylineOverlay(coords, { style: routeStyle });
-    poly.overlayName = overlayConfigStyles;
+    poly.overlayName = overlayConfigStyles.overlayName;
     return poly;
   }
 
