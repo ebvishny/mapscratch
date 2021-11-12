@@ -27,20 +27,22 @@
   var globalCoordinateData = null;
 
   // Group toggling functions
-  function renderToggleButtons(overlayData) {
+  function renderToggleButtons(overlayData, gpsOnly=false) {
     var htmlContent = '';
     Object.keys(overlayData).forEach(function(keyName) {
       var overlayContent = overlayData[keyName];
-      var bgColor = overlayContent.visible ? overlayContent.styles.normalPin : '#F7F7F7';
-      var borderColor = overlayContent.styles.normalPin;
-      var color = overlayContent.visible ? '#fff' : overlayContent.styles.normalPin;
-      var overlayName = overlayContent.styles.overlayName;
-      htmlContent += `<button id='toggle_scheduled' style='padding:5px;background-color:${bgColor};border:2px solid ${borderColor};color:${color}' onclick="toggleOverlay('${overlayName}', '${keyName}')">${keyName.replace('actual', 'GPS')}</button>`
+      if (!gpsOnly || keyName === 'actual') {
+        var bgColor = overlayContent.visible ? overlayContent.styles.normalPin : '#F7F7F7';
+        var borderColor = overlayContent.styles.normalPin;
+        var color = overlayContent.visible ? '#fff' : overlayContent.styles.normalPin;
+        var overlayName = overlayContent.styles.overlayName;
+        htmlContent += `<button id='toggle_scheduled' style='padding:5px;background-color:${bgColor};border:2px solid ${borderColor};color:${color}' onclick="toggleOverlay('${overlayName}', '${keyName}', ${gpsOnly})">${keyName.replace('actual', 'GPS')}</button>`
+      }
     });
     document.getElementById('legend').innerHTML = htmlContent;
   }
 
-  function toggleOverlay(overlayName, keyName) {
+  function toggleOverlay(overlayName, keyName, gpsOnly=false) {
     var updatedVisibility = !globalOverlayData[keyName].visible;
     globalOverlayData[keyName].visible = updatedVisibility;
 
@@ -54,7 +56,7 @@
         overlay.visible = updatedVisibility;
       }
     });
-    renderToggleButtons(globalOverlayData);
+    renderToggleButtons(globalOverlayData, gpsOnly);
   }
 
   // [CALLOUTS]
@@ -167,7 +169,11 @@
     globalOverlayData = overlayData;
     globalRouteCoordinates = routeCoordinates;
 
-    renderToggleButtons(globalOverlayData);
+     // Sometimes we only want to display vehicle history if we don't know what user is associated
+    var queryString = new URLSearchParams(window.location.search);
+    var gpsOnly = !!queryString.get('gpsOnly');
+    
+    renderToggleButtons(globalOverlayData, gpsOnly);
 
     // First remove anything already on the map
     clearExistingMapItems(map)
@@ -176,20 +182,23 @@
     console.log('adding data', overlayData);
     // Last created has most visible z-index
     addOverlaySection(overlayData.actual, map);
-    addOverlaySection(overlayData.scheduled, map);
-    addOverlaySection(overlayData.timesheet, map);
-
+    if (!gpsOnly) {
+      addOverlaySection(overlayData.scheduled, map);
+      addOverlaySection(overlayData.timesheet, map);
+    }
     // Now add in the route sprites
     var actualCoordinates = routeCoordinates.actual.map(function(coordPair) {
       return new mapkit.Coordinate(coordPair[0], coordPair[1]);
     });
     var actualPolyline = DrawPolyLine(actualCoordinates, overlayData.actual.styles);
     map.addOverlay(actualPolyline);
-    var scheduledCoordinates = routeCoordinates.scheduled.map(function(coordPair) {
-      return new mapkit.Coordinate(coordPair[0], coordPair[1]);
-    });
-    var scheduledPolyline = DrawPolyLine(scheduledCoordinates, overlayData.scheduled.styles);
-    map.addOverlay(scheduledPolyline);
+    if (!gpsOnly) {
+      var scheduledCoordinates = routeCoordinates.scheduled.map(function(coordPair) {
+        return new mapkit.Coordinate(coordPair[0], coordPair[1]);
+      });
+      var scheduledPolyline = DrawPolyLine(scheduledCoordinates, overlayData.scheduled.styles);
+      map.addOverlay(scheduledPolyline);
+    }
 
     // Finally focus the map
     map.showItems(map.annotations);
