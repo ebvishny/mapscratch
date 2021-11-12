@@ -50,9 +50,10 @@
     });
     map.overlays.forEach(function(overlay) {
       if (overlay.overlayName === overlayName) {
-        overlay.visible = false;
+        overlay.visible = updatedVisibility;
       }
     });
+    renderToggleButtons(globalOverlayData);
   }
 
   // [CALLOUTS]
