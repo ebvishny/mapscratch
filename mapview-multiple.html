@@ -33,14 +33,15 @@
       var bgColor = overlayContent.visible ? overlayContent.styles.normalPin : '#F7F7F7';
       var borderColor = overlayContent.visible ? '#F7F7F7' : overlayContent.styles.normalPin;
       var color = overlayContent.visible ? '#ccc' : '#fff';
-      htmlContent += `<button id='toggle_scheduled' style='padding:5px;background-color:${bgColor};border:2px solid ${borderColor}' onclick="toggleOverlay('${keyName}')">${keyName}</button>`
+      var overlayName = overlayContent.styles.overlayName;
+      htmlContent += `<button id='toggle_scheduled' style='padding:5px;background-color:${bgColor};border:2px solid ${borderColor}' onclick="toggleOverlay('${overlayName}', '${keyName}')">${keyName.replace('actual', 'GPS')}</button>`
     });
     document.getElementById('legend').innerHTML = htmlContent;
   }
 
-  function toggleOverlay(overlayName) {
-    var updatedVisibility = !globalOverlayData[overlayName].visible;
-    globalOverlayData[overlayName].visible = updatedVisibility;
+  function toggleOverlay(overlayName, keyName) {
+    var updatedVisibility = !globalOverlayData[keyName].visible;
+    globalOverlayData[keyName].visible = updatedVisibility;
 
     map.annotations.forEach(function(annotation) {
       if (annotation.overlayName === overlayName) {
