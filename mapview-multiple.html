@@ -11,6 +11,10 @@
 
 <body>
 <div id="map"></div>
+<div id="legendContainer" style="padding:25px">
+  <div id="legend" stye="backgroundColor:#F7F7F7;border:2px dashed #CCC;padding:15px;">
+  </div>
+</div>
 
 <script>
   // [MAP INITIALIZATION]
@@ -18,6 +22,36 @@
     authorizationCallback: function (done) { mapkitter.token("7ca4315e-14c2-4f8a-b888-9ee79c4b8523", done); }
   });
   var map = new mapkit.Map("map");
+  var globalOverlayData = null;
+  var globalCoordinateData = null;
+
+  // Group toggling functions
+  function renderToggleButtons(overlayData) {
+    var htmlContent = '';
+    Object.keys(overlayData).forEach(function(keyName) {
+      var overlayContent = overlayData[keyName];
+      var bgColor = overlayContent.visible ? overlayContent.styles.normalPin : '#F7F7F7';
+      var borderColor = overlayContent.visible ? '#F7F7F7' : overlayContent.styles.normalPin;
+      htmlContent += `<button id='toggle_scheduled' style='padding:5px;background-color:${bgColor};border:2px solid ${borderColor}' onclick='toggleOverlay(\'${keyName}\')'>${keyName}</button>`
+    });
+    document.getElementById('legend').innerHTML = htmlContent;
+  }
+
+  function toggleOverlay(overlayName) {
+    var updatedVisibility = !globalOverlayData[overlayName].visible;
+    globalOverlayData[overlayName].visible = updatedVisibility;
+
+    map.annotations.forEach(function(annotation) {
+      if (annotation.overlayName === overlayName) {
+        annotation.visible = updatedVisibility;
+      }
+    });
+    map.overlays.forEach(function(overlay) {
+      if (overlay.overlayName === overlayName) {
+        overlay.visible = false;
+      }
+    });
+  }
 
   // [CALLOUTS]
   // Stop annotation callout delegate
@@ -98,6 +132,7 @@
         subtitle: 'Landmark Subtext',
       });
       annotation.stop = stop
+      annotation.overlayName = stop.overlayName;
       return annotation;
     });
     map.addAnnotations(createdAnnotations);
@@ -109,7 +144,9 @@
       lineDash: [8, 4],
       strokeColor: overlayConfigStyles.routeColor,
     });
-    return new mapkit.PolylineOverlay(coords, { style: routeStyle });
+    var poly = new mapkit.PolylineOverlay(coords, { style: routeStyle });
+    poly.overlayName = overlayConfigStyles;
+    return poly;
   }
 
   fetch('multipleOverlays.json?2')
@@ -123,6 +160,11 @@
   }
 
   function handleData(overlayData, routeCoordinates, map) {
+    globalOverlayData = overlayData;
+    globalRouteCoordinates = routeCoordinates;
+
+    renderToggleButtons(globalOverlayData);
+
     // First remove anything already on the map
     clearExistingMapItems(map)
 
