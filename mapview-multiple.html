@@ -34,7 +34,7 @@
       var borderColor = overlayContent.visible ? '#F7F7F7' : overlayContent.styles.normalPin;
       var color = overlayContent.visible ? '#ccc' : '#fff';
       var overlayName = overlayContent.styles.overlayName;
-      htmlContent += `<button id='toggle_scheduled' style='padding:5px;background-color:${bgColor};border:2px solid ${borderColor}' onclick="toggleOverlay('${overlayName}', '${keyName}')">${keyName.replace('actual', 'GPS')}</button>`
+      htmlContent += `<button id='toggle_scheduled' style='padding:5px;background-color:${bgColor};border:2px solid ${borderColor};color:${color}' onclick="toggleOverlay('${overlayName}', '${keyName}')">${keyName.replace('actual', 'GPS')}</button>`
     });
     document.getElementById('legend').innerHTML = htmlContent;
   }
